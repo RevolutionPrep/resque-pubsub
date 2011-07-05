@@ -20,7 +20,7 @@ module Resque
             options[:namespace] = Resque.redis.namespace
             options[:topic] = topic
             options[:class] = self.to_s
-            puts "[#{self.to_s}] subscribing with #{options.inspect}"
+            Configuration.logger.info "[#{self.to_s}] subscribing with #{options.inspect}"
             Exchange.redis.sadd(:queues, :subscription_requests)
             Exchange.redis.rpush("queue:subscription_requests", { :class => 'Resque::Plugins::Pubsub::Exchange', :args => [options] }.to_json)      
           end
